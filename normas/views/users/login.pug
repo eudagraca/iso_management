@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+    div.uk-padding-large
+        h1(class="uk-text-bold uk-margin-medium-top") Seja bem vindo a Gestão de Normas
+        p(class="uk-text-light") Neste modulo, tens a disponibilidade de visualizar as normas que o teu sector tem acesso
+        
+        div(class="uk-child-width-1-1@s uk-grid")
+            div 
+            - var h1Classes = ['h3', 'mb-3', 'font-weight-normal uk-margin-medium-top uk-padding-remove']
+                h2(class=h1Classes) Aceda a plataforma
+            
+                form(class="uk-form-stacked uk-width-1-2@s uk-padding-remove" method="post" action="/account/login")
+                    if errors
+                        div(class="uk-alert-danger uk-margin-top uk-width-1-1@s uk-alert" uk-alert)
+                            a(class="uk-alert-close uk-close" uk-close)
+                            each val in errors
+                                    p #{val.msg}
+                    div(class="uk-margin uk-width-1-1@s uk-margin-medium-top")
+                        label(class="uk-form-label" for="username") Nome de usuário
+                        div(class="uk-form-controls" )
+                            input(class="uk-input" name="username" id="username" value=(error? error.username : '') autocomplete="false" type="text" placeholder="Nome de usuário.") 
+                            #error
+                            if error_session
+                                if error_session.username
+                                    p.uk-text-danger.uk-margin-remove.uk-text-light #{error_session.username}
+                    div(class="uk-margin uk-width-1-1@s")
+                        label(class="uk-form-label" for="password") Senha
+                        div(class="uk-form-controls")
+                            input(class="uk-input" id="password" name="password" type="password" placeholder="Senha de acesso")
+                            if error_session
+                                if error_session.password
+                                    p.uk-text-danger.uk-margin-remove.uk-text-light #{error_session.password}
+                    div(class="uk-margin uk-width-1-1@s")
+                        button(class="uk-button uk-button-secondary uk-align-right" type="submit") Aceder      
+            div(class="uk-form-stacked uk-width-1-2@s")
+                img(class="uk-img" src="images/unknown18.jpeg")

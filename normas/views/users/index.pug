@@ -1,0 +1,31 @@
+extends ../dashboard
+
+block content_box
+    div(class="uk-padding-large")
+
+        - var h1Classes = ['h3', 'mb-3', 'font-weight-normal uk-text-bold']
+        h3(class=h1Classes) Lista de usuários
+        - if (messages.info)
+            div(uk-toggle=".my-class" class="uk-alert-success" uk-alert)
+                a(class="uk-alert-close" uk-close)
+                p(class="uk-text-default") #{messages.info}
+        table#generic-table.uk-table.uk-table-hover.uk-table-striped
+            thead
+                th.uk-text-left Nome
+                th.uk-text-left Usuário
+                th.uk-text-left Função
+                th.uk-text-left Ultimo acesso
+                th.uk-text-left Detalhes
+            tbody
+                each user in users
+                    tr 
+                        td #{user.first_name} #{user.last_name}  
+                        td #{user.username}
+                        td #{user.role == 'admin'? 'Administrador' : (user.role == 'basic'? 'Usuario Normal': (user.role == 'supervisor'? 'Supervisor': 'Desconhecido'))}
+                        td #{ user.last_login? fullFormat(user.last_login): 'NA' }
+                        //- td #{ new Date().format(user.created_at,'YYYY/MM/DD HH:mm:ss') }
+                        td 
+                            a.uk-button.uk-text-capitalize.uk-button-small.uk-margin-small-right(href='/account/edit/'+user.id)
+                                span(href='#' uk-icon='icon:  chevron-right; ratio: 1.2') 
+                else
+                    p Nao tem usuarios registados na plataforma

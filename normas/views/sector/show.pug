@@ -1,0 +1,41 @@
+extends ../dashboard
+
+block content_box
+    .uk-background-default.uk-margin-medium-top.uk-padding
+        - var h1Classes = ['h3', 'mb-3', 'uk-text-bold uk-margin-medium-left']
+        h3(class=h1Classes) Detalhes do sector
+
+        div(class="uk-form-stacked uk-width-1-1@s uk-margin-medium-top" method="POST" action="/sectores/update/"+sector.id)
+            div(class="uk-width-1-1@s uk-grid")
+
+                div(class="uk-margin uk-width-1-2@s  ")
+                    label(class="uk-form-label" for="name") Nome do sector
+                    div(class="uk-form-controls" )
+                        input(class="uk-input" name="name" id="name" value=(values? values.name : sector.name) readonly) 
+
+                div(class="uk-margin-remove-top uk-width-1-2@s")
+                    label(class="uk-form-label" for="user") Responsavel
+                    div(class="uk-form-controls")
+                        input(class="uk-input" id="user" name="user" readonly value=(sector.users? sector.users[0].first_name + ' '+sector.users[0].last_name: ''))
+        hr.uk-margin-medium-left.uk-margin-medium-right
+        div.uk-margin-medium-top.uk-margin-medium-left.uk-margin-medium-right
+            table#generic-table.uk-table.uk-table-hover.uk-table-striped
+                thead
+                    th.uk-text-left Nome
+                    th.uk-text-left Usuário
+                    th.uk-text-left Função
+                    th.uk-text-left Ultimo acesso
+                    th.uk-text-left Detalhes
+                tbody
+                    each user in sector.users
+                        tr 
+                            td #{user.first_name} #{user.last_name}  
+                            td #{user.username}
+                            td #{user.role == 'admin'? 'Administrador' : (user.role == 'basic'? 'Usuario Normal': (user.role == 'supervisor'? 'Supervisor': 'Desconhecido'))}
+                            td #{ user.last_login? fullFormat(user.last_login): 'NA' }
+                            //- td #{ new Date().format(user.created_at,'YYYY/MM/DD HH:mm:ss') }
+                            td 
+                                a.uk-button.uk-text-capitalize.uk-button-small.uk-margin-small-right(href='/account/edit/'+user.id)
+                                    span(href='#' uk-icon='icon:  chevron-right; ratio: 1.2') 
+                    else
+                        p Nao tem usuarios registados na plataforma      

@@ -1,0 +1,99 @@
+extends ../dashboard
+
+block content_box
+    .uk-background-default.uk-padding
+        - if (messages.remove)
+                .message.remove
+                        <div class="uk-alert-warning" uk-alert>
+                            <a class="uk-alert-close" uk-close></a>
+                            <p>
+                                span= messages.remove
+                            </p>
+                        </div>
+        - if (messages.alertForm)
+                .message.alertForm
+
+                        <div class="uk-alert-danger" uk-alert>
+                            <a class="uk-alert-close" uk-close></a>
+                            <p>
+                                span= messages.alertForm
+                            </p>
+                        </div>
+        
+        div.uk-padding-small
+         - var h1Classes = ['h3', 'mb-3', 'uk-text-bold uk-padding-remove-bottom uk-margin-medium-left']
+         h3(class=h1Classes) Registo de norma
+         form(class="uk-form-stacked uk-width-1-1@s uk-padding-remove-top uk-margin-large-top" method="POST" action="/documentos" enctype="multipart/form-data")
+            div(class="uk-width-1-1@s uk-padding-remove-top uk-grid")
+
+                div(class="uk-margin uk-width-1-2@s uk-padding-remove-top uk-padding-remove-right")
+                    label(class="uk-form-label" for="name") Nome da Norma
+                    div(class="uk-form-controls" )
+                        input(class="uk-input" name="name" requered id="name" value=(values? values.name : '') autocomplete="false" type="text" placeholder="Nome da norma") 
+                        
+                        if errors
+                            if errors.name
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small #{errors.name.msg}
+                div(class="uk-margin-remove-top uk-width-1-4@s  uk-padding-remove-right")
+                    label(class="uk-form-label" for="code") Codigo
+                    div(class="uk-form-controls")
+                        input(class="uk-input" id="code" required name="code" value=(values? values.code : '') type="text" autocomplete="false" placeholder="codigo da norma")
+                        
+                        if errors
+                            if errors.code
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.code.msg }
+
+                div(class="uk-margin-bottom uk-width-1-4@s")
+                    label(class="uk-form-label" for="published") Ano de publicação
+                    div(class="uk-form-controls" )
+                        input(class="uk-input" min="1900" max="2100" type="number" step="1" requered name="published" id="published" value=(values? values.published : '') autocomplete="false" ) 
+                        
+                        if errors
+                            if errors.published
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.published.msg}
+
+                
+                div(class="uk-margin-bottom uk-width-1-4@s")
+                    label(class="uk-form-label" for="published") Categoria da norma
+                        select(name="type" class="uk-select uk-margin-small-top" required="true")
+                            option(value="") Por favor seleccione...
+                            option(value="IEC") IEC
+                            option(value="ISO") ISO
+                            option(value="BS") BS
+                            option(value="DIN") DIN
+                            option(value="IEEE") IEEE
+                    if errors
+                        if errors.published
+                            p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.published.msg}
+                
+                div(class="uk-margin-bottom uk-width-1-4@s")
+                    label(class="uk-form-label" for="sector") Sector
+                    div(class="uk-form-controls  uk-margin-small-top" )
+                        input(class="uk-input" id="sector" readonly value= (sessionID.sectorName)) 
+                        input(class="uk-input" hidden name="sector_id"  value=(sessionID.sector.sectorId)  ) 
+                        
+                        if errors
+                            if errors.published
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.published.msg}
+
+                
+                div(class="uk-margin")
+                    span(class="uk-text-middle.uk-text-lowercase") Selecione a norma no seu dispositivo </span>
+                    div.uk-form-custom
+                        input(type="file" required name="file_name")
+                        span(class="uk-link") Seleccionar
+
+
+                div(class="uk-width-1-1@s uk-margin-right")
+                    label(class="uk-form-label" for="description") Designação
+                    div(class="uk-form-controls" )
+                        
+                        textarea(class="uk-textarea" rows="3" id="description" required name="description")
+                        
+                        if errors
+                            if errors.description
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{(errors? errors.description.msg : '')}
+                div(class="uk-margin uk-width-1-1@s")
+                    button(class="uk-button uk-button-secondary uk-align-right" type="submit") Registar
+
+                    

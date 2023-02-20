@@ -1,0 +1,30 @@
+extends ../dashboard
+
+block content_box
+    .uk-background-default.uk-padding-large
+        - var h1Classes = ['h3', 'mb-3', 'uk-text-bold uk-margin-medium-left']
+        h3(class=h1Classes) Registo de sector
+
+        form(class="uk-form-stacked uk-width-1-1@s uk-margin-large-top" method="POST" action="/sectores")
+            div(class="uk-width-1-1@s uk-grid")
+
+                div(class="uk-margin uk-width-1-2@s uk-padding-remove-right")
+                    label(class="uk-form-label" for="name") Nome do sector
+                    div(class="uk-form-controls" )
+                        input(class="uk-input" name="name" id="name" value=(values? values.name : '') autocomplete="false" type="text" placeholder="Nome.") 
+                        
+                        if errors
+                            if errors.name
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small #{errors.name.msg}
+                div(class="uk-margin-remove-top uk-width-1-2@s  uk-padding-remove-right")
+                    label(class="uk-form-label" for="user") Responsavel
+                    div(class="uk-form-controls")
+                        input(class="uk-input" id="user" name="user" value=(values? values.user : '') type="text" autocomplete="false" placeholder="Responsavel")
+                        input(hidden name="user_id" id="user_id" class="uk-input")
+                                
+                        if errors
+                            if errors.user_id
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.user_id.msg }
+
+                div(class="uk-width-1-1@s uk-padding-remove")
+                    button(class="uk-button uk-button-secondary uk-align-right" type="submit") Registar 

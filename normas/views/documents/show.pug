@@ -1,0 +1,7 @@
+extends ../dashboard
+
+block content_box
+  .uk-background-default.uk-padding
+    embed(type="application/pdf" src="#{pdf}")
+
+    p #{pdf}

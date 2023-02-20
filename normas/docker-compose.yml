@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+  redis-server:
+    image: 'redis:alpine'
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysqldb
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+      - MYSQL_HOST=$MYSQL_HOST
+    ports:
+      - "3307:3307"
+    volumes:
+      - db:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 8080:80
+    environment:
+      # - PMA_HOST: "mysqldb"
+      # - PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      # - PMA_ARBITRARY=1
+      - PMA_HOST=mysqldb #Note the "mysql". Must be the name of the what you used as the mysql service.
+      - PMA_USER=root
+      - PMA_PORT=3306
+      - PMA_PASSWORD=venancioe
+    restart: unless-stopped
+
+  web:
+    depends_on:
+      - mysqldb
+    build:
+      context: ./
+      target: dev
+      dockerfile: Dockerfile
+    volumes:
+      - .:/src
+    # command: npm run start:dev
+      - /src/node_modules
+    entrypoint: ["/bin/bash", "./entrypoint.sh"]
+    env_file: .env
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_URL=$REDIS_URL
+      - DB_HOST=$MYSQL_HOST
+      - DB_USER=$MYSQLDB_USER
+      - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - DB_NAME=$MYSQLDB_DATABASE
+      - DB_PORT=$MYSQLDB_DOCKER_PORT
+      - NODE_ENV=development
+      - DEBUG=portal_corporativo:*
+    stdin_open: true
+    tty: true
+volumes: 
+  db:

@@ -1,0 +1,54 @@
+extends layout
+
+block content
+      a(href="/")
+        img.uk-image-logotipo(src='images/logo.PNG', alt='', uk-img='')
+      nav.uk-navbar-container.uk-padding-remove-horizontal(uk-navbar='')
+          .uk-navbar-right
+            ul.uk-navbar-nav
+              li
+                a.uk-text-uppercase(href='#') Biblioteca Digital
+                .uk-navbar-dropdown
+                  ul.uk-nav.uk-navbar-dropdown-nav
+                    li.uk-active
+                      a(href='#') CTM
+                    li
+                      a(href='#') ICM
+                    li.uk-nav-header Arquivo Digital
+                    li
+                      a(href='#') Manuais
+                    li
+                      a(href='#') Tutoriais
+                    li.uk-nav-divider
+                    li
+                      a(href='#') Livros
+              li
+                a.uk-text-uppercase(href='http://museu.edm.co.mz/' target="_blank") Museu
+              li
+                a(href="#" class="uk-text-uppercase") Repositorio
+                div(class="uk-navbar-dropdown")
+                    ul(class="uk-nav uk-navbar-dropdown-nav")
+                        li(class="uk-active")
+                          a(href="/home") Normas
+                        li
+                          a(href="#") Item
+                        li
+                          a(href="#") Item
+              li
+                - if (sessionID)
+                    a(href='/account/logout' class='uk-text-white' title='Terminar a sessão' data-uk-tooltip='') Sair 
+                      span(uk-icon="sign-out")
+                - else
+                    a.uk-text-uppercase(href='/account/login') #{sessionID}
+               
+      div(uk-slideshow='animation: push')
+      .uk-height-large.uk-flex.uk-flex-center.uk-flex-middle.uk-background-cover.uk-light(data-src='images/EDM (1).jpg', sizes='height: 1250px,', uk-height-viewport='expand: true', uk-img='')
+        div.uk-card.calor-circle.index-card-circle(data-src="images/EDM (1).jpg", uk-img)
+          a.uk-icon-button.uk-text-light.uk-button-yellow(href='', uk-icon='plus')
+          h3(class="uk-margin-large-top uk-text-center uk-margin-auto-top ") #{name} Seja bem vindo ao Portal de Conhecimento
+            p(class="uk-text-small uk-text-justify uk-margin-top uk-text-light uk-text-center ") O portal é uma canal criado pela ACADEMIA da EDM para facil acesso e partilha de conteúdo de interresse dos colaboradoes, clientes e publico no geral
+              div(class="uk-container")
+        
+                div(class="uk-child-width-1-1@s")
+                  div(class="uk-padding uk-flex uk-flex-center")
+                    a(class="uk-button-yellow uk-text-white uk-button uk-text-capitalize" href="/account/login") Continuar

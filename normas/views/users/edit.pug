@@ -1,0 +1,75 @@
+extends ../dashboard
+
+block content_box
+    .uk-background-default.uk-padding-large
+        - var h1Classes = ['h3', 'mb-3', 'uk-text-bold uk-margin-medium-left']
+        h3(class=h1Classes) Detalhes do usuário
+
+        form(class="uk-form-stacked uk-width-1-1@s uk-margin-large-top" method="POST" action="/account/update")
+            div(class="uk-width-1-1@s uk-grid")
+
+                div(class="uk-margin uk-width-1-3@s uk-padding-remove-right")
+                    label(class="uk-form-label" for="first_name") Primeiro Nome
+                    div(class="uk-form-controls" )
+                        input(class="uk-input" name="first_name" id="first_name" value=(values? values.first_name : user.first_name) autocomplete="false" type="text" placeholder="Primeiro Nome.") 
+
+                        if errors
+                            if errors.first_name
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small #{errors.first_name.msg}
+                div(class="uk-margin-remove-top uk-width-1-3@s  uk-padding-remove-right")
+                    label(class="uk-form-label" for="last_name") Último nome
+                    div(class="uk-form-controls")
+                        input(class="uk-input" id="last_name" name="last_name" value=(values? values.last_name : user.last_name) type="text" autocomplete="false" placeholder="Último nome")
+
+                        if errors
+                            if errors.last_name
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.last_name.msg }
+
+                div(class="uk-margin-bottom uk-width-1-3@s")
+                    label(class="uk-form-label" for="username") Nome de usuário
+                    div(class="uk-form-controls" )
+                        input(class="uk-input" readonly id="username" value=(values? values.username : user.username) autocomplete="false" type="text" placeholder="Nome de usuário.") 
+
+                        if errors
+                            if errors.username
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.username.msg}
+
+                div(class="uk-width-1-3@s uk-padding-remove-right")
+                    label(class="uk-form-label" for="role") Resposabilidade
+                    div(class="uk-form-controls" )
+                        mixin user_role(role, value)
+                            if (user.role  == role)
+                                option(value=role, selected="selected")= value
+                            else
+                                option(value=role)= value
+                        select(name="role" required="true" id="role" class="uk-select")
+                            option(value="" disabled) Por favor seleccione...
+                            +user_role('basic', 'Usuário Normal')
+                            +user_role('admin', 'Administrador')
+                            +user_role('supervisor', 'Supervisor')
+                        if errors
+                            if errors.role
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{(errors? errors.role.msg : '')}
+
+                div(class="uk-width-1-3@s uk-padding-remove-right")
+                    label(class="uk-form-label" for="sector_id") Sector 
+                    div(class="uk-form-controls" )
+                        mixin user_sector(sector, value)
+                            if (user.sectors.length > 0)
+                                if (user.sectors[0].id  == sector)
+                                    option(value=sector, selected="selected")= value
+                            else
+                                option(value=sector)= value
+                        select(class="uk-select" id="sector_id" required name="sector_id")
+                            option(value="") Seleccione uma opção 
+                            each value in sectors
+                                +user_sector(value.id, value.name)
+
+                                //- option(value=(value.id) ) #{value.name} 
+
+                        if errors
+                            if errors.sector_id
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{(errors? errors.sector_id.msg : '')}
+
+                div(class="uk-margin uk-width-1-3@s")
+                    button(class="uk-button uk-button-primary uk-margin-small-top uk-align-right" type="submit") Actualizar 

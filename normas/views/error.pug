@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .uk-margin-large-left.uk-margin-large-right.uk-margin-large-top 
+    h1= message
+    title=title 
+    h2= error.status
+    pre #{error.stack}
+
+    a(href= `${error.url} ` class="uk-button uk-button-secondary") Back

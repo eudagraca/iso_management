@@ -1,0 +1,84 @@
+extends ../dashboard
+
+block content_box
+    .uk-background-default.uk-padding-large
+        - var h1Classes = ['h3', 'mb-3', 'uk-text-bold uk-margin-medium-left']
+        h3(class=h1Classes) Criação de usuário
+
+        form(class="uk-form-stacked uk-width-1-1@s uk-margin-large-top" method="POST" action="/account/signup")
+            div(class="uk-width-1-1@s uk-grid")
+
+                div(class="uk-margin uk-width-1-3@s uk-padding-remove-right")
+                    label(class="uk-form-label" for="first_name") Primeiro Nome
+                    div(class="uk-form-controls" )
+                        input(class="uk-input first_name" name="first_name" id="first_name" value=(values? values.first_name : '') autocomplete="false" type="text" placeholder="Primeiro Nome.") 
+
+                        if errors
+                            if errors.first_name
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small #{errors.first_name.msg}
+                
+                div(class="uk-margin-remove-top uk-width-1-3@s  uk-padding-remove-right")
+                    label(class="uk-form-label" for="last_name") Último nome
+                    div(class="uk-form-controls")
+                        input(class="uk-input last_name" id="last_name" name="last_name" value=(values? values.last_name : '') type="text" autocomplete="false" placeholder="Último nome")
+
+                        if errors
+                            if errors.last_name
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.last_name.msg }
+
+                div(class="uk-margin-bottom uk-width-1-3@s uk-padding-remove-right")
+                    label(class="uk-form-label" for="username") Nome de usuário
+                    div(class="uk-form-controls" )
+                        input(class="uk-input username" name="username" id="username" readonly value=(values? values.username : '') autocomplete="false" type="text" placeholder="Nome de usuário.") 
+
+                        if errors
+                            if errors.username
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.username.msg}
+
+                div(class="uk-width-1-3@s uk-padding-remove-right")
+                    label(class="uk-form-label" for="role") Resposabilidade
+                    div(class="uk-form-controls" )
+
+                        select(class="uk-select" id="role" required name="role")
+                            option(value="") Seleccione uma opção 
+                            option(value="basic" ) Usuário normal 
+                            option(value="admin") Administrador 
+                            option(value="supervisor" ) Supervisor 
+
+                        if errors
+                            if errors.role
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{(errors? errors.role.msg : '')}
+
+
+                div(class="uk-width-1-3@s uk-padding-remove-right")
+                    label(class="uk-form-label" for="sector_id") Sector
+                    div(class="uk-form-controls" )
+                        select(class="uk-select" id="sector_id" required name="sector_id")
+                            option(value="") Seleccione uma opção 
+                            each value in sectors
+                                option(value=(value.id) ) #{value.name} 
+
+                        if errors
+                            if errors.sector_id
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{(errors? errors.sector_id.msg : '')}
+
+
+                div(class="uk-margin-remove-top uk-width-1-3@s  uk-padding-remove-right")
+                    label(class="uk-form-label" for="password") Senha
+                    div(class="uk-form-controls")
+                        input(class="uk-input" id="password" name="password" required type="password" placeholder="Senha de acesso")
+
+                        if errors
+                            if errors.password
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small  #{errors.password.msg}
+
+                div(class="uk-width-1-3@s uk-margin uk-padding-remove-right")
+                    label(class="uk-form-label" for="confirm_password") Confirmação de senha
+                    div(class="uk-form-controls" )
+                        input(class="uk-input" required name="confirm_password" id="confirm_password" value=username autocomplete="false" type="password" placeholder="Confirmação de senha") 
+
+                        if errors
+                            if errors.confirm_password
+                                p.uk-text-danger.uk-margin-remove.uk-text-light.uk-text-small #{errors.confirm_password.msg}
+                div(class="uk-margin uk-width-1-1@s")
+                    button(class="uk-button uk-button-secondary uk-align-right" type="submit") Registar 

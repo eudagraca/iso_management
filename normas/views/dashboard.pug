@@ -1,0 +1,136 @@
+doctype html
+head
+	meta(charset='utf-8')
+	meta(name='viewport' content='width=device-width, initial-scale=1')
+	title=title 
+	// CSS FILES
+	link(rel='stylesheet' type='text/css' href='/stylesheets/dashboard.css')
+	link(href='/stylesheets/uikit/uikit.min.css', rel='stylesheet')
+	link(href='/stylesheets/uikit/uikit-rtl.min.css', rel='stylesheet')
+	link(rel="preconnect" href="https://fonts.googleapis.com")
+	script(src='/javascripts/jquery-3.5.1.js')
+	link(href='/stylesheets/jquery-ui.css', rel='stylesheet')
+	script(src='/javascripts/datatable/jquery.dataTables.js')
+	script(src='/javascripts/datatable/dataTables.uikit.min.js')
+	link(href='/stylesheets/datatable/dataTables.uikit.min.css', rel='stylesheet')
+	script(src='/javascripts/userScript.js')
+	
+	link(href="https://fonts.gstatic.com" rel="preconnect" crossorigin)
+body
+	header#top-head.uk-position-fixed
+		.uk-container.uk-container-expand.uk-background-primary
+			nav.uk-navbar.uk-light(data-uk-navbar='mode:click; duration: 250')
+				.uk-navbar-left
+					.uk-navbar-item(class='uk-hidden@m')
+						a.uk-logo(href='#')
+							img.custom-logo(src='/images/logo.PNG' alt='')
+				.uk-navbar-right
+					ul.uk-navbar-nav
+						li
+							a(href='/account/logout' class='uk-text-white' title='Terminar a sessão' data-uk-tooltip='') Sair 
+								span(uk-icon="sign-out")
+						
+	// /HEADER
+	// LEFT BAR
+	aside#left-col.uk-light(class='uk-visible@m')
+		div.left-logo.uk-flex.uk-flex-middle
+			img.custom-logo(src='/images/logo.PNG' alt='')
+		div.left-content-box.content-box-dark
+			img.uk-border-rounded.profile-img(src='/images/logo.PNG' alt='')
+			
+			h4.uk-text-center.uk-margin-remove-vertical.text-light #{ sessionID? `${sessionID.first_name } ${sessionID.last_name}` : '' }
+			div.uk-position-relative.uk-text-center.uk-display-block
+				a.uk-text-small.uk-text-muted.uk-display-block.uk-text-center(href='#' data-uk-icon='icon: triangle-down; ratio: 0.7') #{sessionID? sessionID.role == 'admin'? 'Administrador' : (sessionID.role == 'basic'? 'Usuario Normal': (sessionID.role == 'supervisor'? 'Supervisor': 'Desconhecido')) : 'NA'}
+				// user dropdown
+				div.uk-dropdown.user-drop(data-uk-dropdown='mode: click; pos: bottom-center; animation: uk-animation-slide-bottom-small; duration: 150')
+					ul.uk-nav.uk-dropdown-nav.uk-text-left
+						
+						li
+							a(href='#')
+								span(data-uk-icon='icon: image')
+								|  Your Data
+						li.uk-nav-divider
+						li
+							a(href='#')
+								span(data-uk-icon='icon: sign-out')
+								|  Sign Out
+				// /user dropdown
+		div.left-nav-wrap
+			ul.uk-nav.uk-nav-default.uk-nav-parent-icon(data-uk-nav='')
+				li.uk-nav-header
+					a.uk-text-white(href='/home') Visão Geral
+				- if(sessionID.role == 'admin')
+					li.uk-parent
+						a(href='#')
+							span.uk-margin-small-right(data-uk-icon='icon: thumbnails')
+							| USUARIOS
+						ul.uk-nav-sub
+							li
+								a(title='Article' href='/account') USUARIO
+							li
+								a(title='Album' href='/account/signup') NOVO USUARIO
+				li.uk-parent
+					a(href='#')
+						span.uk-margin-small-right(data-uk-icon='icon: album')
+						| SECTORES
+					ul.uk-nav-sub
+						li
+							a(href='/sectores') SECTORES
+						- if(sessionID.role == 'admin')
+
+							li
+								a(href='/sectores/create') NOVO SECTOR
+				
+				li.uk-parent
+					a(href='#')
+						span.uk-margin-small-right(data-uk-icon='icon: file-text')
+						| NORMAS
+					ul.uk-nav-sub
+						li
+							a(href='/documentos') NORMAS
+						- if(sessionID.sector != null)
+							- if(sessionID.sector.is_managed)
+								li
+									a(href='/documentos/create') NOVA NORMAS
+			div.left-content-box.uk-margin-top
+				h5 Acessos Diarios
+				div
+					span.uk-text-small
+						| Tráfego 
+						small (+20)
+					progress.uk-progress(value='20' max='100')
+				//- div
+				//- 	span.uk-text-small
+				//- 		| Income 
+				//- 		small (+78)
+				//- 	progress.uk-progress.success(value='78' max='100')
+				//- div
+				//- 	span.uk-text-small
+				//- 		| Feedback 
+				//- 		small (-12)
+				//- 	progress.uk-progress.warning(value='12' max='100')
+		div.bar-bottom
+			ul.uk-subnav.uk-flex.uk-flex-center.uk-child-width-1-5(data-uk-grid='')
+				li
+					a.uk-icon-link(href='/' data-uk-icon='icon: home' title='Home' data-uk-tooltip='')
+				li
+					a.uk-icon-link(href='#' data-uk-icon='icon: settings' title='Settings' data-uk-tooltip='')
+				li
+					a.uk-icon-link(href='#' data-uk-icon='icon: social' title='Social' data-uk-tooltip='')
+				li
+					a.uk-icon-link(href='/account/logout' data-uk-tooltip='Sign out' data-uk-icon='icon: sign-out')
+	// /LEFT BAR
+	// CONTENT
+	#content(data-uk-height-viewport='expand: true').uk-container.uk-container-expand
+		block content_box
+	// /CONTENT
+	// JS FILES
+	//- script(src='/javascripts/jquery/jquery.js')
+	script(src='/javascripts/jquery/jquery-ui.js')
+	script(src='/javascripts/select2.min.js')
+	script(src='/javascripts/requests/user.js')
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js')
+	script(src='/javascripts/chartScripts.js')
+	script(src='/javascripts/uikit/uikit.min.js')
+	script(src='/javascripts/uikit/uikit-icons.min.js')
+

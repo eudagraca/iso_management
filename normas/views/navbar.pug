@@ -1,0 +1,113 @@
+extends layout
+
+block content
+    img.uk-image-logotipo(src='../images/logo.PNG', alt='', uk-img='')
+    nav.uk-navbar-container.uk-padding-remove-horizontal(uk-navbar='boundary-align: true; dropbar: true')
+    .uk-navbar-right
+    ul.uk-navbar-nav
+    li
+      a.uk-text-bold(href='#') Arquivo Digital
+      .uk-navbar-dropdown
+        ul.uk-nav.uk-navbar-dropdown-nav
+          li.uk-active
+            a(href='#') CTM
+          li
+            a(href='#') ICT
+          li.uk-nav-header Biblioteca Digital
+          li
+            a(href='#') Manuais
+          li
+            a(href='#') Tutoriais
+          li.uk-nav-divider
+          li
+            a(href='#') Livros
+    li
+      a.uk-text-bold(href='#') Museu
+      .uk-navbar-dropdown.uk-navbar-dropdown-width-2
+        .uk-navbar-dropdown-grid.uk-child-width-1-2(uk-grid='')
+          div
+            ul.uk-nav.uk-navbar-dropdown-nav
+              li.uk-active
+                a(href='#') Equipe
+              li
+                a(href='#') Substaçoes
+              li.uk-nav-header Destaque 1
+              li
+                a(href='#') Linhas
+              li
+                a(href='#') Sistemas
+              li.uk-nav-divider
+              li
+                a(href='#') ...
+          div
+            ul.uk-nav.uk-navbar-dropdown-nav
+              li.uk-active
+                a(href='#') Active
+              li
+                a(href='#') Cronologico
+              li.uk-nav-header Destaque 2
+              li
+                a(href='#') Historias do Patrimonio
+              li
+                a(href='#') Realizacoes Historicas
+              li.uk-nav-divider
+              li
+                a(href='#') Item
+    li
+      a.uk-text-bold(href='#') Normas
+      .uk-navbar-dropdown.uk-navbar-dropdown-width-3
+        .uk-navbar-dropdown-grid.uk-child-width-1-3(uk-grid='')
+          div
+            ul.uk-nav.uk-navbar-dropdown-nav
+              li.uk-active
+                a(href='#') ISO
+              li
+                a(href='#') ISO 30500
+              li.uk-nav-header LEVEL 1
+              li
+                a(href='#') ISO 20030
+              li
+                a(href='#') ISO 30200
+              li.uk-nav-divider
+              li
+                a(href='#') ISO 267
+          div
+            ul.uk-nav.uk-navbar-dropdown-nav
+              li.uk-active
+                a(href='#') Standard
+              li
+                a(href='#') 4023
+              li.uk-nav-header LEVEL 2
+              li
+                a(href='#') 2202
+              li
+                a(href='#') 3200
+              li.uk-nav-divider
+              li
+                a(href='#') 3500
+          div
+            ul.uk-nav.uk-navbar-dropdown-nav
+              li.uk-active
+                a(href='#') 40011
+              li
+                a(href='#') 40011.1
+              li.uk-nav-header LEVEL 3
+              li
+                a(href='#') 40011.3
+              li
+                a(href='#') 40011.4
+              li.uk-nav-divider
+              li
+                a(href='#') 40011.5
+    li
+      a.uk-text-bold(href='#') ENTRAR
+      .uk-navbar-dropdown
+        ul.uk-nav.uk-navbar-dropdown-nav
+          li.uk-active
+            a(href='#') profile
+          li
+            a(href='#') Your Name
+          li
+            a(href='#') Email
+          li
+            a(href='#') Logout

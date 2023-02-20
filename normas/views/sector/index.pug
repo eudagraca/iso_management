@@ -1,0 +1,28 @@
+extends ../dashboard
+
+block content_box
+    div(class="uk-padding-large")
+
+        - var h1Classes = ['h3', 'mb-3', 'font-weight-normal uk-text-bold']
+        h3(class=h1Classes) Lista de sectores
+         - if (messages.info)
+                    div(uk-toggle=".my-class" class="uk-alert-success" uk-alert)
+                        a(class="uk-alert-close" uk-close)
+                        p(class="uk-text-default") #{messages.info}
+        table#generic-table.uk-table.uk-table-hover.uk-table-striped
+            thead
+                th.uk-text-left.uk-text-uppercase Nome
+                th.uk-text-left.uk-text-uppercase Responsavel
+                th.uk-text-left.uk-table-shrink.uk-text-uppercase(colspan=2) ACÇÃO
+            tbody
+                each sector in sectors
+                    tr 
+                        td #{sector.name}
+                        td #{sector.users? sector.users[0].first_name + ' '+sector.users[0].last_name: ''}
+                        td 
+                            a.uk-button.uk-text-capitalize.uk-button-small.uk-margin-small-right(href='/sectores/edit/'+sector.id) 
+                                    span(href='#' uk-icon='icon:  file-text; ratio: 1.2')
+                            a.uk-button.uk-text-capitalize.uk-button-small.uk-margin-small-right(href='/sectores/show/'+sector.id)
+                                span(href='#' uk-icon='icon:  chevron-right; ratio: 1.2') 
+                else
+                    p Nao tem usuarios registados na plataforma
