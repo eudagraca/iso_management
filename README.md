@@ -13,6 +13,7 @@ The main focus is to simplify the way they shared and visualize ISO documents in
 - [Express JS](https://expressjs.com/)
 - [jQuery](https://jquery.com/)
 - [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
+- [ReactJs](https://reactjs.org/)
 - [Sequelize](https://sequelize.org/docs/v6/) && [MySQL](https://www.mysql.com/)
 
 
